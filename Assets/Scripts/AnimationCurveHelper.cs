@@ -9,8 +9,8 @@ public static class AnimationCurveHelper
         curve.MoveKey(0, startKeyframe);
     }
 
-    public static float EndTime(AnimationCurve curve)
+    public static Keyframe LastKey(AnimationCurve curve)
     {
-        return curve.keys[Mathf.Max(0, curve.length - 1)].time;
+        return curve.keys[Mathf.Max(0, curve.length - 1)];
     }
 }

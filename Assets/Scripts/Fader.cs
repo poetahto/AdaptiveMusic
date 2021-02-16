@@ -31,7 +31,7 @@ public abstract class Fader : MonoBehaviour
 
     private IEnumerator FadeCoroutine(AnimationCurve curve)
     {
-        float endTime = AnimationCurveHelper.EndTime(curve);
+        float endTime = AnimationCurveHelper.LastKey(curve).time;
         float elapsedTime = 0;
 
         AnimationCurveHelper.ChangeFirstKeyframe(curve, Value);
@@ -43,6 +43,8 @@ public abstract class Fader : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        Value = AnimationCurveHelper.LastKey(curve).value;
     }
 }
 
