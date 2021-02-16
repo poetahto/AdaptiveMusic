@@ -139,8 +139,11 @@ public class TemporalAudioSource : MonoBehaviour
         // cast to int - we only fire an event when a whole beat has passed
         if (LastBeatEvent != (int) TotalBeats && TotalBeats >= 0)
         {
+            // ensure that no beats are ever skipped
+            for (int i = 0; i < (int) (TotalBeats - LastBeatEvent); i++)
+                events.onBeat.Invoke(LastBeatEvent + i);
+
             LastBeatEvent = (int) TotalBeats;
-            events.onBeat.Invoke(LastBeatEvent);
         }
     }
 

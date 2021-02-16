@@ -3,41 +3,20 @@
 public class BasicAdaptiveController : MonoBehaviour
 {
     public TemporalAudioSource[] sources;
+    public AudioVolumeFader[] faders;
+    
     public int quantizationAmount = 4;
     public bool showGUI = true;
-    
-    private AudioVolumeFader[] _faders;
     private bool _fadeOut = true;
     
-    private void Awake()
-    {
-        _faders = new AudioVolumeFader[sources.Length];
-        
-        CreateFaders();
-    }
-
-    private void CreateFaders()
-    {
-        GameObject faderHolder = new GameObject("Faders");
-        faderHolder.transform.parent = transform;
-        
-        for (int i = 0; i < sources.Length; i++)
-        {
-            var currentSource = sources[i];
-            var newFader = faderHolder.AddComponent<AudioVolumeFader>();
-            newFader.audioSource = currentSource.source;
-            _faders[i] = newFader;
-        }
-    }
-
     public void FadeIn(int index)
     {
-        QuantizeFade(_faders[index], sources[index], FadeType.In);
+        QuantizeFade(faders[index], sources[index], FadeType.In);
     }
 
     public void FadeOut(int index)
     {
-        QuantizeFade(_faders[index], sources[index], FadeType.Out);
+        QuantizeFade(faders[index], sources[index], FadeType.Out);
     }
 
     private void QuantizeFade(Fader fader, TemporalAudioSource source, FadeType type)
